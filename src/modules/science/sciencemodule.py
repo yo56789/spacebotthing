@@ -1,4 +1,5 @@
 import discord
+from src.utils import FiveTier
 
 
 class ScienceModule:
@@ -18,6 +19,6 @@ class ScienceModule:
     def as_embed(self) -> discord.Embed:
         """Converts the module into an info embed"""
         em = discord.Embed(title=self.name,
-                           description=f"Current Science Gain: {self.level_to_gain()} \n\n{self.description}",
+                           description=f"Level: `{FiveTier(self.level).name}`\nScience Gain: `{self.level_to_gain()}` \n\n{self.description}",
                            color=discord.Color.blurple())
         return em

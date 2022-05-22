@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 from discord.commands import slash_command
-from ..modules.lab import LabModule
+from discord import option
+
+from ..modules import LabModule, GreenhouseModule
 
 
 class SpaceStation(commands.Cog):
@@ -10,8 +12,9 @@ class SpaceStation(commands.Cog):
         self.bot = bot
 
     @slash_command(guild_ids=[801646969676234782])
-    async def moduleinfo(self, ctx: discord.ApplicationContext):
-        labmod = LabModule(1)
+    @option("level", type=int, description="View the level of a lab module", default=1, min_value=1, max_value=5)
+    async def moduleinfo(self, ctx: discord.ApplicationContext, level: str):
+        labmod = LabModule(int(level))
         await ctx.respond(embed=labmod.as_embed())
 
     @slash_command(guild_ids=[801646969676234782])

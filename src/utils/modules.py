@@ -1,4 +1,4 @@
-from .enums import *
+from .enums import ThreeTier, FiveTier
 
 
 class Modules:
@@ -8,4 +8,4 @@ class Modules:
     @staticmethod
     def create_default_list() -> dict:
         """Creates the default module list for new acc"""
-        return {"farm": Farm.BASIC.value, "lab": Lab.BASIC.value, "trading": Trading.BASIC.value}
+        return {"farm": FiveTier.BASIC.value, "lab": FiveTier.BASIC.value, "trading": ThreeTier.BASIC.value}

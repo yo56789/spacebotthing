@@ -1,3 +1,5 @@
+import discord
+from discord import option
 from discord.ext import commands
 from tortoise import Tortoise
 
@@ -6,7 +8,15 @@ import dotenv
 
 dotenv.load_dotenv()
 
-bot = commands.Bot()
+bot = commands.Bot(intents=discord.Intents.all())
+
+
+@bot.slash_command(guild_ids=[801646969676234782])
+@option("cog", description="The cog to reload", default="spacestation")
+async def reload(ctx, cog: str):
+    # RELOADS A COG ONLY FOR DEV
+    bot.reload_extension(f'src.cogs.{cog}')
+    await ctx.respond(f"reloaded: {cog}", ephemeral=True)
 
 
 @bot.event
