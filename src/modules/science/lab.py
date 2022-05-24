@@ -3,6 +3,11 @@ from .sciencemodule import ScienceModule
 
 class LabModule(ScienceModule):
     def __init__(self, level: int):
+        """
+        Lab module subclass of ScienceModule.
+
+        :param level: The level of the module.
+        """
         self.name = "Lab Module"
         self.description = "Produces science that can be used to unlock new blueprints!"
         self.level = level

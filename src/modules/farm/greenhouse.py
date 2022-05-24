@@ -3,6 +3,11 @@ from .farmmodule import FarmModule
 
 class GreenhouseModule(FarmModule):
     def __init__(self, level: int):
+        """
+        Greenhouse module subclass of FarmModule.
+
+        :param level: The level of the module.
+        """
         self.name = "Farm"
         self.description = "Produces crops that can be used to create food and earn money!"
         self.level = level

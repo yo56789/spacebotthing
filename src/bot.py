@@ -1,6 +1,7 @@
 import discord
 from discord import option
 from discord.ext import commands
+
 from tortoise import Tortoise
 
 import os
@@ -19,6 +20,12 @@ async def reload(ctx, cog: str):
     await ctx.respond(f"reloaded: {cog}", ephemeral=True)
 
 
+@bot.slash_command(guild_ids=[801646969676234782])
+async def close_db(ctx: discord.ApplicationContext):
+    await Tortoise.close_connections()
+    await ctx.respond("Database connections closed!", ephemeral=True)
+
+
 @bot.event
 async def on_ready():
     # Connect to the sqlite database using tortoise ORM
@@ -27,7 +34,7 @@ async def on_ready():
             "default": {
                 "engine": "tortoise.backends.sqlite",
                 "credentials": {
-                    "file_path": os.getcwd() + "/database/data.db"
+                    "file_path": os.getcwd() + "/data/data.db"
                 }
             }
         },

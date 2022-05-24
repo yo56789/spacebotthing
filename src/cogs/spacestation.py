@@ -4,6 +4,7 @@ from discord.commands import slash_command
 from discord import option
 
 from ..modules import LabModule, GreenhouseModule
+from ..database import Users
 
 
 class SpaceStation(commands.Cog):
@@ -20,6 +21,11 @@ class SpaceStation(commands.Cog):
     @slash_command(guild_ids=[801646969676234782])
     async def test(self, ctx: discord.ApplicationContext):
         await ctx.respond("OS OK")
+
+    @slash_command(guild_ids=[801646969676234782])
+    async def create_account(self, ctx: discord.ApplicationContext):
+        await Users.create(userid=ctx.user.id)
+        await ctx.respond("Created account (check db)")
 
 
 def setup(bot):
