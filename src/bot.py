@@ -9,7 +9,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
-bot = commands.Bot(intents=discord.Intents.all())
+bot = commands.Bot(intents=discord.Intents.all(), debug_guilds=[801646969676234782])
 
 
 @bot.slash_command(guild_ids=[801646969676234782])

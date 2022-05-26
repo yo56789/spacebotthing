@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord.commands import slash_command
-from discord import option
+from discord.commands import option
 
 from ..modules import LabModule, GreenhouseModule
 from ..database import Users
@@ -19,8 +19,9 @@ class SpaceStation(commands.Cog):
         await ctx.respond(embed=labmod.as_embed())
 
     @slash_command(guild_ids=[801646969676234782])
-    async def test(self, ctx: discord.ApplicationContext):
-        await ctx.respond("OS OK")
+    # @option(name="tests", type=str, description="This commands is testing this exact thing", default="a")
+    async def test(self, ctx: discord.ApplicationContext, tests: discord.Option(str, autocomplete=discord.utils.basic_autocomplete(["test1", "test3"])), testt: discord.Option(str, choices=["test1", "test3"])):
+        await ctx.respond(f"{tests} hm")
 
     @slash_command(guild_ids=[801646969676234782])
     async def create_account(self, ctx: discord.ApplicationContext):

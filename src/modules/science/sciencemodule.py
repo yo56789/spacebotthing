@@ -35,7 +35,7 @@ class ScienceModule:
 
         :return: The embed
         """
-        em = discord.Embed(title=self.name,
-                           description=f"Level: `{FiveTier(self.level).name}`\nScience Gain: `{self.level_to_gain()}` \n\n{self.description}",
+        em = discord.Embed(title=f"{FiveTier(self.level).name} {self.name}",
+                           description=f"Level: `{self.level}`\nScience Gain: `{self.level_to_gain()}` \n\n{self.description}",
                            color=discord.Color.blurple())
         return em
