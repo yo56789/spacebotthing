@@ -15,3 +15,10 @@ class ThreeTier(Enum):
     BASIC = 1
     ADVANCED = 2
     ELITE = 3
+
+
+class OreTier(Enum):
+    """Represents all the ore tiers from miners"""
+    SMALL = 1
+    MEDIUM = 2
+    LARGE = 3

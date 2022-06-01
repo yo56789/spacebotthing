@@ -13,4 +13,6 @@ class GreenhouseModule(FarmModule):
         self.level = level
         # basic - advanced - elite - ultimate - special
         self.crop_gain = [3, 9, 18, 36, 48]
+        # elite - ultimate - special
+        self.recipe = {"3": {}}
         super().__init__(self.name, self.description, self.level, self.crop_gain)

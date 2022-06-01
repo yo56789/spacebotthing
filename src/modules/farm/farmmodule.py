@@ -4,7 +4,7 @@ from src.utils import FiveTier
 
 
 class FarmModule:
-    def __init__(self, name: str, description: str, level: int, crop_gain: list, recipes: dict):
+    def __init__(self, name: str, description: str, level: int, crop_gain: list):
         """
         Parent class for all crop generating modules.
 
@@ -17,7 +17,6 @@ class FarmModule:
         self.description = description
         self.level = level
         self.crop_gain = crop_gain
-        self.recipes = recipes
 
     def __repr__(self):
         return f"<FarmModule name={self.name} description={self.description} level={self.level}"
@@ -37,7 +36,7 @@ class FarmModule:
 
         :return: The embed
         """
-        em = discord.Embed(title=self.name,
-                           description=f"Level: `{self.level} - {FiveTier(self.level).name}` \nCrop Gain: `{self.level_to_gain()}` \n\n{self.description}",
+        em = discord.Embed(title=f"{FiveTier(self.level).name} {self.name}",
+                           description=f"Level: `{self.level}` \nCrop Gain: `{self.level_to_gain()}` \n\n{self.description}",
                            color=discord.Color.blurple())
         return em

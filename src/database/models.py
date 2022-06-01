@@ -7,6 +7,7 @@ class SpaceStation(Model):
     id = fields.BigIntField(pk=True)
     level = fields.IntField(default=1)
     modules = fields.JSONField(default=Modules.create_default_list())
+    machines = fields.JSONField(default=[])
 
 
 class Users(Model):
@@ -50,6 +51,19 @@ class Users(Model):
         :return: The amount of money the user has.
         """
         return (await cls.get_or_create(userid=userid))[0].money
+
+    @classmethod
+    async def get_spacestation(cls, userid: int) -> SpaceStation:
+        """
+        Gets the SpaceStation model from the given userid
+
+        :param userid: The users' id
+        :return: The users SpaceStation db model
+        """
+        userinfo = (await cls.get_or_create(userid=userid))[0]
+        spacestation = await userinfo.spacestation
+
+        return spacestation
 
     @classmethod
     async def get_spacestation_lvl(cls, userid: int) -> int:
@@ -97,3 +111,13 @@ class Users(Model):
         :return: The users info.
         """
         return (await cls.get_or_create(userid=userid))[0]
+
+    @classmethod
+    async def get_from_spacestation(cls, spacestatid):
+        """
+        Gets the user info from there spacestation id.
+
+        :param spacestatid: The users spacestation id.
+        :return: The users info.
+        """
+        return await cls.get(spacestation=spacestatid)

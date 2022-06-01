@@ -1,4 +1,5 @@
 from ..modules import *
+from ..database import Users
 
 
 def format_materials(materials: dict) -> str:
@@ -27,26 +28,19 @@ def format_blueprints(blueprints: list) -> str:
 
     return returnstr
 
-#
-# def to_module(category: str, module: str, level: int) -> ...:
-#     """
-#     Converts a module name and level to the class of
-#     the specified module.
-#
-#     :param category: Parent class name of the module
-#     :param module: Name of the module.
-#     :param level: Modules level.
-#     :return: Class of the module.
-#     """
-#     match category:
-#         case "farm":
-#             if module == "greenhouse":
-#                 return GreenhouseModule(level)
-#         case "science":
-#             if module == "lab":
-#                 return LabModule(level)
-#         case _:
-#             raise KeyError("Could not find the specified category")
+
+def format_ore(ores: list) -> str:
+    """
+    Formats the provided list.
+
+    :param ores: The ores to format.
+    :return: The formmated ores as a string.
+    """
+    returnstr = ""
+    for i in ores:
+        returnstr += f"**{i.title()}** "
+
+    return returnstr
 
 
 def to_farm_module(module: str, level: int) -> ...:
@@ -71,3 +65,76 @@ def to_science_module(module: str, level: int) -> ...:
     """
     if module == "lab":
         return LabModule(level)
+
+
+def to_miner_module(module: str, level: int) -> ...:
+    """
+    Converts a miner modules name and level to its class.
+
+    :param module: Name of the module.
+    :param level: Level of the module.
+    :return: The class of the module
+    """
+    if module == "miner":
+        return MinerModule(level)
+
+
+def assemble_error_embed(description: str) -> discord.Embed:
+    """
+    Creates an embed with the given description
+
+    :param description: Text to put in the `description` part of an embed
+    :return: The created embed
+    """
+    return discord.Embed(title="Oop",
+                         description=description,
+                         color=discord.Color.red())
+
+
+def assemble_success_embed(title: str, description: str) -> discord.Embed:
+    """
+    Creates an embed with the given description
+
+    :param title: The title of the embed
+    :param description: Description of the embed
+    :return: The created embed
+    """
+    return discord.Embed(title=title,
+                         description=description,
+                         color=discord.Color.green())
+
+
+async def buy(category: str, itemname: str, itemlevel: str, cost: int, userid: int) -> (discord.Embed, bool):
+    """
+    Purchases an item for the user
+
+    :param category: The category that the item is in the db
+    :param itemname: The name of the item
+    :param itemlevel: The level of the item
+    :param cost: The amount of money needed to purchase
+    :param userid: The user who is purchasing item's id
+    :return: An embed and a bool for ephemeral responses
+    """
+    match category:
+        case "module":
+            user = await Users.get_user_info(userid=userid)
+            spacestation = await Users.get_spacestation(userid=userid)
+            if cost > user.money:
+                return assemble_error_embed("You do not have sufficent funds to purchase this item!"), True
+
+            try:
+                if len(spacestation.modules.get(itemname)) == 5:
+                    return assemble_error_embed("You have purchased the maximum amount of this module!"), True
+            except TypeError:
+                spacestation.modules[itemname] = []
+
+            user.money -= cost
+            spacestation.modules[itemname].append(int(itemlevel))
+
+            await user.save()
+            await spacestation.save()
+            return assemble_success_embed("Purchase Successful!",
+                                          f"You have successfully purchased a **{itemname} module** \nYou now have `${user.money}`"), False
+
+        case _:
+            return assemble_error_embed("Something went terribly wrong! Try again later."), True
