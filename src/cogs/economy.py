@@ -10,7 +10,7 @@ class Economy(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    shop = SlashCommandGroup("shop", "Used to buy various items to improve your space station!", guild_ids=[801646969676234782])
+    shop = SlashCommandGroup("shop", "Used to buy various items to improve your space station!")
 
     @shop.command()
     async def modules(self, ctx: discord.ApplicationContext, module: discord.Option(int, description="The module to be purchased", choices=[discord.OptionChoice("BASIC Miner Module", 1)])):
