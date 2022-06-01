@@ -10,7 +10,7 @@ class User(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(guild_ids=[801646969676234782])
+    @slash_command()
     async def profile(self, ctx: discord.ApplicationContext):
         user = (await Users.get_or_create(userid=ctx.user.id))[0]
         spacestationlvl = await Users.get_spacestation_lvl(userid=ctx.author.id)
@@ -33,13 +33,13 @@ class User(commands.Cog):
         science = await Users.get_science(userid=ctx.author.id)
         await ctx.respond(f"You have `{science}` science", ephemeral=True)
 
-    @slash_command(guild_ids=[801646969676234782])
+    @slash_command()
     async def spacestationlevel(self, ctx: discord.ApplicationContext):
         lvl = await Users.get_spacestation_lvl(userid=ctx.author.id)
 
         await ctx.respond(f"Your space station level is `{lvl}`", ephemeral=True)
 
-    @slash_command(guild_ids=[801646969676234782])
+    @slash_command()
     async def materials(self, ctx: discord.ApplicationContext):
         materials = await Users.get_materials(userid=ctx.author.id)
         if len(materials) == 0:
@@ -51,7 +51,7 @@ class User(commands.Cog):
 
         await ctx.respond(embed=em, ephemeral=True)
 
-    @slash_command(guild_ids=[801646969676234782])
+    @slash_command()
     async def blueprints(self, ctx: discord.ApplicationContext):
         blueprints = await Users.get_blueprints(userid=ctx.author.id)
         if len(blueprints) == 0:
