@@ -10,7 +10,7 @@ class Info(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    module = SlashCommandGroup("module", "Get information about a module and its level", guild_ids=[801646969676234782])
+    module = SlashCommandGroup("module", "Get information about a module and its level")
 
     # @slash_command(guild_ids=[801646969676234782])
     # async def module(self, ctx: discord.ApplicationContext, category: discord.Option(str, choices=["farm", "science"]), module: discord.Option(str, choices=["greenhouse", "lab"]), level: discord.Option(int, min_value=1, max_value=5)):
@@ -36,7 +36,7 @@ class Info(commands.Cog):
 
         await ctx.respond(embed=miner_module.as_embed())
 
-    @slash_command(guild_ids=[801646969676234782])
+    @slash_command()
     async def ore(self, ctx: discord.ApplicationContext, tier: discord.Option(int, description="The tier of ore", choices=[discord.OptionChoice("small", 1), discord.OptionChoice("medium", 2), discord.OptionChoice("large", 3)])):
         module = MinerModule(tier)
 
